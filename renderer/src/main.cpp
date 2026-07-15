@@ -1,19 +1,18 @@
+#include "lib/File.hpp"
+
+#include <nlohmann/json.hpp>
 #include <iostream>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <fstream>
 #include <sstream>
 
-std::string readFile(const std::string &filename)
-{
-  std::ifstream file("../src/" + filename);
-  std::stringstream buffer;
-  buffer << file.rdbuf();
-  return buffer.str();
-}
+using json = nlohmann::json;
 
 int main()
 {
+  File file;
+
   if (!glfwInit())
   {
     return -1;
@@ -41,7 +40,7 @@ int main()
   }
 
   GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-  std::string vertexSource = readFile("shaders/vertex.glsl");
+  std::string vertexSource = file.readFile("shaders/vertex.glsl");
   const char *shaderSrc = vertexSource.c_str();
   glShaderSource(
       vertexShader,
@@ -66,7 +65,7 @@ int main()
   }
 
   GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-  std::string fragmentSource = readFile("shaders/fragment.glsl");
+  std::string fragmentSource = file.readFile("shaders/fragment.glsl");
   const char *fragmentSrc = fragmentSource.c_str();
   glShaderSource(
       fragmentShader,

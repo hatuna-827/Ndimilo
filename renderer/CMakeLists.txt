@@ -10,6 +10,7 @@ find_package(glfw3 REQUIRED)
 
 add_executable(Ndimilo
     src/main.cpp
+    src/lib/File.cpp
     external/glad/src/glad.c
 )
 
